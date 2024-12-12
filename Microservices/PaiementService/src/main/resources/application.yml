@@ -1,0 +1,39 @@
+spring:
+  cloud:
+    stream:
+      bindings:
+        paiementProcess-in-0:
+          destination: commande-topics
+
+      kafka:
+        streams:
+          binder:
+            brokers: "localhost:9092"
+            configuration:
+              default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+              default.value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+            functions:
+              processRequest:
+                application-id: paiementServiceID
+                configuration:
+                  auto.offset.reset: earliest
+                  replication.factor: 1
+
+
+    function:
+      definition: paiementProcess
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
