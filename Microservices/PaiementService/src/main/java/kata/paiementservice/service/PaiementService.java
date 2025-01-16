@@ -69,7 +69,17 @@ public class PaiementService {
             paiement.setMontantTotal(resultatPaiement.getMontantPaye());
 
             if (resultatPaiement.isSuccess()) {
-                paymentRepository.save(paiement);
+                Paiement savedPaiement = paymentRepository.save(paiement);
+
+                PaiementResponseDTO paiementResponseDTO = new PaiementResponseDTO();
+                paiementResponseDTO.setPaiementId(savedPaiement.getId().toString());
+                paiementResponseDTO.setCommandeId(paiement.getCommandeId());
+                paiementResponseDTO.setStatus(ConstanteStatusPaiement.STATUS_SUCCESS);
+                try {
+                    kafkaTemplatePaiement.send(topicPaiement,"paiement",objectMapper.writeValueAsString(paiementResponseDTO));
+                } catch (JsonProcessingException ex) {
+                    throw new RuntimeException(ex);
+                }
             } else {
                 PaiementResponseDTO paiementResponseDTO = new PaiementResponseDTO();
                 paiementResponseDTO.setCommandeId(paiement.getCommandeId());

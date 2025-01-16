@@ -2,6 +2,7 @@ package kata.commandeservice.model;
 
 
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.*;
 import kata.shareddto.paimentservice.TypePaiement;
 import java.math.BigDecimal;
 import java.util.List;

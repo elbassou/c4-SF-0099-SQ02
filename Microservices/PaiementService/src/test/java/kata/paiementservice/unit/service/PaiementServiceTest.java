@@ -18,6 +18,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.test.util.ReflectionTestUtils;
 
@@ -26,6 +27,7 @@ import java.util.List;
 
 import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
+@ImportAutoConfiguration(exclude = ImportAutoConfiguration.class)
 class PaiementServiceTest {
 
     @InjectMocks
